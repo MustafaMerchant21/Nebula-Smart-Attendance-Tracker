@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:gravity="center_horizontal|bottom"
+        android:paddingEnd="15dp"
+        android:background="#00FFFFFF"
+        app:buttonGravity="center_vertical"
+        app:title="Home"
+        app:titleMarginBottom="20dp"
+        app:titleTextColor="#C8FFFFFF"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/toolbar_title"
+        tools:ignore="RtlSymmetry" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/navbar_background"
+        app:itemTextColor="#FFD6FA"
+        app:menu="@menu/bottom_nav_menu" />
+<!--        android:layout_marginTop="-75dp"-->
+    <!--        android:background="@drawable/navbar_background"-->
+
+</LinearLayout>

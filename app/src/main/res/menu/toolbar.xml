@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<!--    <item-->
+<!--        android:title="Notification"-->
+<!--        android:orderInCategory="1"-->
+<!--        android:id="@+id/notification"-->
+<!--        app:actionLayout="@layout/notificaton_icon"-->
+<!--        app:showAsAction="always"-->
+<!--        />-->
+<!--        android:icon="@drawable/toolbar_notification_icon"-->
+</menu>

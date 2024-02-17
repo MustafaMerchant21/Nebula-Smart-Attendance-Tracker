@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000227"
+        android:overScrollMode="ifContentScrolls"
+        android:persistentDrawingCache="scrolling|animation"
+        android:scrollIndicators="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:mcv_allowClickDaysOutsideCurrentMonth="false"
+        app:mcv_arrowColor="#98B2FF"
+        app:mcv_calendarMode="month"
+        app:mcv_dateTextAppearance="@style/TextAppearance.AppCompat.Small"
+        app:mcv_headerTextAppearance="@style/MyDatePicker"
+        app:mcv_selectionColor="#19FFFFFF"
+        app:mcv_showOtherDates="other_months"
+        app:mcv_weekDayTextAppearance="@style/MyDatePicker" />
+
+    <!--    <com.applandeo.materialcalendarview.CalendarView-->
+    <!--        android:id="@+id/calendarView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

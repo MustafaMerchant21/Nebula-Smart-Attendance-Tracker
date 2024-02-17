@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="menuItemActiveIndicator">#D5BFFF</color>
+    <color name="homeTimeIndicator">#D3D1D9</color>
+    <color name="homeDateIndicator">#918DA0</color>
+    <color name="textRegular">#C9C9C9</color>
+    <color name="homeAttendedHead">#02B76E</color>
+    <color name="homeAttendedTxt">#57897F</color>
+    <color name="homeLeaveHead">#B78F05</color>
+    <color name="homeLeaveTxt">#89725E</color>
+    <color name="homeTotalHead">#50A2E2</color>
+    <color name="homeTotalTxt">#647796</color>
+    <color name="homeLeftHead">#C285E1</color>
+    <color name="homeLeftTxt">#6D5291</color>
+    <color name="uiContainerBox">#12FFFFFF</color> <!-- calendar, container -->
+    <color name="attendanceChangeRate">#51FC62</color> <!-- +21% / -15% -->
+</resources>

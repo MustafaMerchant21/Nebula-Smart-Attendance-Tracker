@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navHome"
+        android:enabled="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/menu_home_icon_selector"
+        android:title="@string/home_menu" />
+<!--        android:enabled="true"-->
+    <item
+        android:id="@+id/navAttendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/menu_attendance_icon_selector"
+        android:title="@string/attendance_menu" />
+    <item
+        android:id="@+id/navLeave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/menu_leave_icon_selector"
+        android:title="@string/leave_menu" />
+    <item
+        android:id="@+id/navProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/menu_profile_icon_selector"
+        android:title="@string/profile_menu"
+        android:visible="true" />
+</menu>
