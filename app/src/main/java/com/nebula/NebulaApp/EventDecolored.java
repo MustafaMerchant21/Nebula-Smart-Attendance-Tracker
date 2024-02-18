@@ -9,11 +9,10 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
-public class EventDecorator implements DayViewDecorator {
-    private int color = Color.parseColor("#D0BCFF");
+public class EventDecolored implements DayViewDecorator {
     private CalendarDay currentDate;
 
-    public EventDecorator(CalendarDay currentDate) {
+    public EventDecolored(CalendarDay currentDate) {
         this.currentDate = currentDate;
     }
 
@@ -24,11 +23,10 @@ public class EventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
-        drawable.getPaint().setColor(Color.parseColor("#D0BCFF"));
-        view.setBackgroundDrawable(drawable);
-        ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor("#381E72"));
+        view.setDaysDisabled(true);
+        ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor("#443D54"));
         view.addSpan(span);
     }
 }
+
 

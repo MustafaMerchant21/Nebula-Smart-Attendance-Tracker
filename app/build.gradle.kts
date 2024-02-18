@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -39,6 +40,8 @@ dependencies {
     implementation ("com.journeyapps:zxing-android-embedded:4.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.firebase:firebase-database:20.3.0")
+//    implementation ("com.github.prolificinteractive:material-calendarview:${version}")
 //    implementation ("com.android.support:gridlayout-v7:28.0.0")
 //    implementation ("com.android.support:appcompat-v7:28.0.0")
     testImplementation("junit:junit:4.13.2")

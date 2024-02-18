@@ -9,7 +9,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -18,6 +20,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
@@ -43,7 +46,8 @@ public class HomeFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_home,container,false);
         ImageButton scanQr = v.findViewById(R.id.scanQrCode);
-
+        Toolbar toolbar = (Toolbar) requireActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("Home");
         scanQr.setOnClickListener(v1 -> {
             IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
             intentIntegrator.setPrompt("Scan the QR Code");
@@ -77,7 +81,14 @@ public class HomeFragment extends Fragment {
                 System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded);
                 if (urlData.equals(studentInstituteSecreteCodeEncoded)){
                     // perform attendance marking process here --->
+                    Fragment mFragment = new AttendanceFragment();
+                    Bundle args = new Bundle();
+                    args.putString("isMarked", "True");
+                    mFragment.setArguments(args);
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, mFragment).commit();
                     Toast.makeText(requireActivity().getApplicationContext(),"Attendance Marked! 🥳",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(requireActivity().getApplicationContext(),"Failed marking your attendance",Toast.LENGTH_SHORT).show();
                 }
             }
         } else {

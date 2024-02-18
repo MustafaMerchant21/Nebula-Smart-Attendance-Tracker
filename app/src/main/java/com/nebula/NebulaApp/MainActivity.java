@@ -23,6 +23,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -74,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
 //
 //        // Add decorator
 //        calendarView.addDecorator(decorator);
-//        MaterialDatePicker.Builder.datePicker().setSelection(MaterialDatePicker.todayInUtcMilliseconds());
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -120,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFragment(Fragment fragment, boolean isInitialized){
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle args = new Bundle();
+//        boolean isMarked = true;  // TODO: Retreive from Database the value of isMarked
+//        args.putString("isMarked", isMarked);
+        args.putString("isMarked", "False"); // TESTING PURPOSE
+        fragment.setArguments(args);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(isInitialized){
             fragmentTransaction.add(R.id.frameLayout, new HomeFragment());

@@ -1,15 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AttendanceFragment">
+    android:orientation="vertical"
+    android:scrollbars="none"
+    android:background="@drawable/app_background"
+    android:padding="15dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Attendance" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textRegular"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/monitor_your_progress"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/this_month"
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/textRegular"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-60dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_medium"
+                android:text="+0%"
+                android:textColor="#00BA0A"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calenderAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/calender_container_box"
+            android:padding="10dp"
+            app:mcv_arrowColor="@color/textRegular"
+            app:mcv_selectionColor="#19FFFFFF"
+            app:mcv_dateTextAppearance="@style/calendar_week_day_text"
+            app:mcv_headerTextAppearance="@style/calendar_month_text"
+            app:mcv_weekDayTextAppearance="@style/calendar_week_day_text"/>
+
+    </LinearLayout>
+
+</ScrollView>

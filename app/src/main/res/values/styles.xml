@@ -40,5 +40,17 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="fontFamily">@font/roboto_medium</item>
     </style>
+    <style name="calendar_month_text">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#CAC4D0</item>
+    </style>
+    <style name="calendar_week_day_text">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#E6E0E9</item>
+    </style>
 
 </resources>
