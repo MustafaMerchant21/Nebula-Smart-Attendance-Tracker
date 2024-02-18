@@ -32,14 +32,9 @@ public class HomeFragment extends Fragment {
 
         public String toHexStr(byte[] hash)
         {
-            // Converting the byte array in the signum representation
             BigInteger no = new BigInteger(1, hash);
-            // Converting the message digest into the hex value
             StringBuilder hexStr = new StringBuilder(no.toString(16));
-            // Padding with tbe leading zeros
-            while (hexStr.length() < 32){
-                hexStr.insert(0, '0');
-            }
+            while (hexStr.length() < 32) hexStr.insert(0, '0');
             return hexStr.toString();
         }
     }
@@ -64,12 +59,12 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        // if the intentResult is null then toast a message as "cancelled"
+        // if the intentResult is null then toast a message as "cancelled" --->
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
                 Toast.makeText(requireActivity().getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
             } else
-            { // if the intentResult is not null we'll set the content and format of scan messagenew RetrieveUrlDataTask().execute(intentResult.getContents());
+            { // if the intentResult is not null we'll set the content and format of scan message --->
                 String urlData = intentResult.getContents();
                 String studentInstituteSecreteCodeEncoded;
                 SHAEncoding sha = new SHAEncoding();
@@ -80,6 +75,7 @@ public class HomeFragment extends Fragment {
                 }
                 System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded);
                 if (urlData.equals(studentInstituteSecreteCodeEncoded)){
+                    // perform attendance marking process here --->
                     Toast.makeText(requireActivity().getApplicationContext(),"Attendance Marked! 🥳",Toast.LENGTH_SHORT).show();
                 }
             }
