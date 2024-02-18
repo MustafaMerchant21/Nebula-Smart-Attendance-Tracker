@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
             IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
             intentIntegrator.setPrompt("Scan the QR Code");
             intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+//            intentIntegrator.setCaptureActivity(ZxingCaptureCustomActivity.class);
             intentIntegrator.setBeepEnabled(false);
             intentIntegrator.setOrientationLocked(true);
             intentIntegrator.initiateScan();
