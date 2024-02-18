@@ -59,6 +59,7 @@
                 android:text="Monday, Dec 12"
                 android:textAppearance="@style/home_current_date"/>
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/scanQrCode"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
@@ -112,6 +113,30 @@
                     android:textSize="19sp"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="-10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textRegular"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:layout_weight="1"
+                    android:text="Attendance Statistics"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="-150dp"
+                    android:alpha=".8"
+                    android:src="@drawable/bar_chart"/>
+            </LinearLayout>
+
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
@@ -162,7 +187,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Attended"
+                        android:text="Total"
                         android:textAppearance="@style/home_stats_card_head"
                         android:textColor="@color/homeTotalHead" />
 
@@ -190,7 +215,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Attended"
+                        android:text="Skipped"
                         android:textAppearance="@style/home_stats_card_head"
                         android:textColor="@color/homeLeaveHead" />
 
@@ -218,7 +243,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Attended"
+                        android:text="Left"
                         android:textAppearance="@style/home_stats_card_head"
                         android:textColor="@color/homeLeftHead" />
 
@@ -234,6 +259,27 @@
                 </LinearLayout>
 
             </GridLayout>
+
+            <Button
+                android:id="@+id/applyForLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/apply_for_leave_container"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="@string/apply_for_a_leave"
+                android:textColor="@color/textRegular"
+                android:textSize="17sp"
+                app:icon="@drawable/leave_apply_svg"
+                app:iconGravity="textEnd"
+                app:iconPadding="20dp"
+                app:iconTint="#9886FF"
+                app:strokeColor="#575A50FF"
+                app:strokeWidth="2dp" />
+
+
 
         </LinearLayout>
 
