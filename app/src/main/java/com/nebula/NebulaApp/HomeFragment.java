@@ -1,6 +1,5 @@
 package com.nebula.NebulaApp;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,15 +14,40 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class HomeFragment extends Fragment {
-    private ImageButton scanQr;
+    String studentInstituteSecreteCode = "GGSP001a9b9ca8da91"; // Fetch institute secret code of student inside this var;
+    public static class SHAEncoding
+    {
+        public byte[] obtainSHA(String s) throws NoSuchAlgorithmException
+        {
+            MessageDigest msgDgst = MessageDigest.getInstance("SHA-512");
+            return msgDgst.digest(s.getBytes(StandardCharsets.UTF_8));
+        }
 
+        public String toHexStr(byte[] hash)
+        {
+            // Converting the byte array in the signum representation
+            BigInteger no = new BigInteger(1, hash);
+            // Converting the message digest into the hex value
+            StringBuilder hexStr = new StringBuilder(no.toString(16));
+            // Padding with tbe leading zeros
+            while (hexStr.length() < 32){
+                hexStr.insert(0, '0');
+            }
+            return hexStr.toString();
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home,container,false);
-        scanQr  =  v.findViewById(R.id.scanQrCode);
+        ImageButton scanQr = v.findViewById(R.id.scanQrCode);
 
         scanQr.setOnClickListener(v1 -> {
             IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
@@ -33,38 +57,34 @@ public class HomeFragment extends Fragment {
             intentIntegrator.setOrientationLocked(true);
             intentIntegrator.initiateScan();
         });
-
         return v;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        // if the intentResult is null then
-        // toast a message as "cancelled"
+        // if the intentResult is null then toast a message as "cancelled"
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
                 Toast.makeText(requireActivity().getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-            } else {
-                // if the intentResult is not null we'll set
-                // the content and format of scan message
-                Toast.makeText(requireActivity().getApplicationContext(), "\t\tSuccess 🥳\n"+intentResult.getContents(), Toast.LENGTH_SHORT).show();
-//                showSuccessDialog();
+            } else
+            { // if the intentResult is not null we'll set the content and format of scan messagenew RetrieveUrlDataTask().execute(intentResult.getContents());
+                String urlData = intentResult.getContents();
+                String studentInstituteSecreteCodeEncoded;
+                SHAEncoding sha = new SHAEncoding();
+                try {
+                    studentInstituteSecreteCodeEncoded = sha.toHexStr(sha.obtainSHA(studentInstituteSecreteCode));
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded);
+                if (urlData.equals(studentInstituteSecreteCodeEncoded)){
+                    Toast.makeText(requireActivity().getApplicationContext(),"Attendance Marked! 🥳",Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    private void showSuccessDialog() {
-        // Create a dialog object
-        Dialog dialog = new Dialog(requireContext().getApplicationContext());
-
-// Set the dialog layout
-        dialog.setContentView(R.layout.scan_success_dialog);
-// Show the dialog
-        dialog.show();
-
-    }
-
 }
