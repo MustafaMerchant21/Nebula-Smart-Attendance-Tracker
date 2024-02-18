@@ -2,27 +2,18 @@ package com.nebula.NebulaApp;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
@@ -32,18 +23,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home,container,false);
-        scanQr  = (ImageButton) v.findViewById(R.id.scanQrCode);
+        scanQr  =  v.findViewById(R.id.scanQrCode);
 
-        scanQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
-                intentIntegrator.setPrompt("Scan the QR Code");
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-                intentIntegrator.setBeepEnabled(false);
-                intentIntegrator.setOrientationLocked(true);
-                intentIntegrator.initiateScan();
-            }
+        scanQr.setOnClickListener(v1 -> {
+            IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(HomeFragment.this);
+            intentIntegrator.setPrompt("Scan the QR Code");
+            intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+            intentIntegrator.setBeepEnabled(false);
+            intentIntegrator.setOrientationLocked(true);
+            intentIntegrator.initiateScan();
         });
 
         return v;
