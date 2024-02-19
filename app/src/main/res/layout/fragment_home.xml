@@ -82,6 +82,7 @@
                     android:layout_marginBottom="-5dp"
                     android:src="@drawable/location_pin"/>
                 <TextView
+                    android:id="@+id/locationParam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location"
