@@ -59,20 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
-        //TODO: Geofencing continuation --> https://leehari007.medium.com/how-to-create-a-geofence-app-in-android-ae456f16c0d0
-//        geofenceList.add(new Geofence.Builder()
-//                // Set the request ID of the geofence. This is a string to identify this
-//                // geofence.
-//                .setRequestId("GGSP_COLLEGE_GEOFENCE")
-//                .setCircularRegion(
-//                        Double.parseDouble("19.994701635668104"),// lat
-//                        Double.parseDouble("73.79993066259617"),// lng
-//                        (float) 10)// add the radius in float.
-//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-//                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-//                .setNotificationResponsiveness(1000)
-//                .build());
-
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
         }
@@ -91,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int itemId = item.getItemId();
                 if (itemId == R.id.navHome) {
                     getFragment(new HomeFragment(), false);
@@ -105,60 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-
-
         // TODO: DB Dynamic Attendance Data Firebase >>>
             getFragment(new HomeFragment(), true);
     }
-
-
-
-
     //TODO: Geofencing continuation --> https://leehari007.medium.com/how-to-create-a-geofence-app-in-android-ae456f16c0d0
-//    private void addGeofence() {
-//        geofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-//                .addOnSuccessListener(this, aVoid -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing has started", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(this, e -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing failed", Toast.LENGTH_SHORT).show();
-//
-//                });
-//    }
-//
-//    private void removeGeofence() {
-//        geofencingClient.removeGeofences(getGeofencePendingIntent())
-//                .addOnSuccessListener(this, aVoid -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing has been removed", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(this, e -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing could not be removed", Toast.LENGTH_SHORT).show();
-//                });
-//    }
-//    private GeofencingRequest getGeofencingRequest() {
-//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-//        builder.addGeofences(geofenceList);
-//        return builder.build();
-//    }
-//
-//    private PendingIntent getGeofencePendingIntent() {
-//        // Reuse the PendingIntent if we already have it.
-//        if (geofencePendingIntent != null) {
-//            return geofencePendingIntent;
-//        }
-//        Toast.makeText(getApplicationContext(), "starting broadcast", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(this, MyBroadCastReceiver.class);
-//        geofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        return geofencePendingIntent;
-//    }
-
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
@@ -190,11 +125,5 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.frameLayout, fragment);
         }
         fragmentTransaction.commit();
-    }
-    public static String getLocationText(){
-        return locationText;
-    }
-    public static void setLocationText(String value){
-        locationText = value;
     }
 }
