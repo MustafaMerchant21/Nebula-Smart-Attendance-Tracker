@@ -65,9 +65,6 @@
         static TextView locationParam;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference();
-        //    private GeofencingClient geofencingClient;
-    //    private GeofenceProvider geofenceProvider;
-    //    private GeofenceBroadcastReceiver geofenceBroadcastReceiver = geofenceBroadcastReceiver = new GeofenceBroadcastReceiver(this);
         private static final String TAG = "HomeFragment";
         private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
         private boolean isEnableQRButton;
@@ -98,28 +95,6 @@
                 return hexStr.toString();
             }
         }
-
-        //    private BroadcastReceiver geofenceReceiver = new BroadcastReceiver() {
-    //        public static final String ACTION_GEOFENCE_TRANSITION = "com.nebula.NebulaApp.GeofenceBroadcastReceiver.ACTION_GEOFENCE_TRANSITION";
-    //        @Override
-    //        public void onReceive(Context context, Intent intent) {
-    //            GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
-    //            if (geofencingEvent.hasError()) {
-    //                Log.d(TAG, "onReceive: Error receiving geofence event...");
-    //                return;
-    //            }
-    //
-    //            int transition = geofencingEvent.getGeofenceTransition();
-    //
-    //            if (transition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-    //                Log.d(TAG, "onReceive: ENTER");
-    //                locationParam.setText("You are inside the geofence");
-    //            } else if (transition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-    //                Log.d(TAG, "onReceive: EXIT");
-    //                locationParam.setText("You are outside the geofence");
-    //            }
-    //        }
-    //    };
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -201,20 +176,14 @@
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void onStatusChanged(String provider, int status, Bundle extras) {
-                    // Do nothing
                 }
-
                 @Override
                 public void onProviderEnabled(String provider) {
-                    // Do nothing
                 }
-
                 @Override
                 public void onProviderDisabled(String provider) {
-                    // Do nothing
                 }
             };
 
@@ -227,15 +196,6 @@
                 // If yes, request location updates from the location manager
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
-
-    //        geofencingClient = LocationServices.getGeofencingClient(requireActivity().getApplicationContext());
-    //        geofenceProvider = new GeofenceProvider();
-    //        LatLng collegeLatLng = new LatLng(19.99470415620573, 73.79992932149065);
-    //        addGeofence(collegeLatLng, 10);
-    //        requestLocationPermission();
-    //        geofencingClient = LocationServices.getGeofencingClient(getActivity());
-    //        geofenceProvider = new GeofenceProvider();
-    //        addGeofences();
             return v;
         }
 
@@ -285,25 +245,6 @@
                         locationParam.setText("None");
 
                     }
-    //                StringBuilder addressBuilder = new StringBuilder();
-    //                String city = address.getPremises();
-    //                if (city != null) {
-    //                    addressBuilder.append(city).append(", ");
-    //                }
-    //                String neighborhood = address.getLocality();
-    //                if (neighborhood != null) {
-    //                    addressBuilder.append(neighborhood).append(", ");
-    //                }
-    //                String institution = address.getFeatureName();
-    //                if (institution != null) {
-    //                    addressBuilder.append(institution);
-    //                }
-    //                String addressName = addressBuilder.toString().trim();
-    //                if (!addressName.isEmpty()) {
-    //                    locationParam.setText(addressName);
-    //                } else {
-    //                    locationParam.setText("Location not available");
-    //                }
                 } else {
                     locationParam.setText("Address not found");
                 }
@@ -328,26 +269,6 @@
                 }
             });
         }
-
-    //    @Override
-    //    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    //
-    //        // Check if the request code matches the one used to request the location permission
-    //        if (requestCode == 1) {
-    //            // Check if the permission was granted
-    //            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-    //                // If yes, check if the app has the permission to access the location
-    //                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-    //                    // If yes, request location updates from the location manager
-    //                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-    //                }
-    //            } else {
-    //                // If no, show a toast message
-    //                Toast.makeText(requireActivity().getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-    //            }
-    //        }
-    //    }
 
         public void updateLocationText(String newText) {
                 locationParam.setText(newText);
