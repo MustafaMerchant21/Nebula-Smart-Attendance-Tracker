@@ -66,6 +66,7 @@
                 android:background="#00FFFFFF"
                 android:src="@drawable/home_mark_attendance_button"/>
             <LinearLayout
+                android:id="@+id/locationContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -84,7 +85,8 @@
                 <TextView
                     android:id="@+id/locationParam"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
                     android:text="Location"
                     android:textColor="@color/textRegular"
                     android:textSize="16sp"
@@ -92,8 +94,9 @@
                     android:fontFamily="@font/roboto_bold"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/streakContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="25dp"
                 android:padding="20dp"
@@ -101,10 +104,12 @@
                 android:background="@drawable/home_streak_container">
 
                 <ImageView
+                    android:id="@+id/streakIcon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/streak_icon"/>
                 <TextView
+                    android:id="@+id/streakText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="You’re on a 11 day streak!"

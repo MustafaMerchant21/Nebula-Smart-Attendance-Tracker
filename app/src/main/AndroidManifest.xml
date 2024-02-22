@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -43,9 +42,19 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             tools:replace="android:screenOrientation" />
+        <receiver
+            android:name=".GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="TODO" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.location.intent.action.GEOFENCE_TRANSITION"/>
+            </intent-filter>
+        </receiver>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDFlHGJ4Lyz5bGDYbLZvMEwRhzftxQIj74"/>
+            android:value="AIzaSyAvOWOcIy6SJ9rPdugZqGgAf6rvCH_x_zc"/>
+<!--            android:value="AIzaSyDFlHGJ4Lyz5bGDYbLZvMEwRhzftxQIj74"/>-->
 <!--        <service-->
 <!--            android:name=".LocationService"-->
 <!--            android:enabled="true"-->
