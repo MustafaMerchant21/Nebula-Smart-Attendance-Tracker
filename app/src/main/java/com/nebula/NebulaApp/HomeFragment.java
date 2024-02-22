@@ -7,11 +7,13 @@
     import android.content.Context;
     import android.content.Intent;
     import android.content.pm.PackageManager;
+    import android.graphics.PointF;
     import android.location.Address;
     import android.location.Geocoder;
     import android.location.Location;
     import android.location.LocationListener;
     import android.location.LocationManager;
+    import android.os.Build;
     import android.os.Bundle;
     import android.os.Handler;
     import android.os.Looper;
@@ -53,6 +55,7 @@
     import java.security.NoSuchAlgorithmException;
     import java.text.DateFormat;
     import java.text.SimpleDateFormat;
+    import java.util.ArrayList;
     import java.util.Calendar;
     import java.util.Date;
     import java.util.List;
@@ -75,6 +78,7 @@
         private Button requestPermissionButton;
         private ImageButton scanQr;
         private LinearLayout streakLayout,locationContainer;
+        private LocationAlgorithm locationAlgorithm;
 
         private static final int REQUEST_LOCATION_PERMISSION = 1;
         private FusedLocationProviderClient fusedLocationProviderClient;
@@ -82,6 +86,7 @@
         private LocationListener locationListener;
         String studentInstituteSecreteCode; // Fetch institute secret code of student inside this var;
 
+        // TODO: SHA-512 Encoding Logic
         public static class SHAEncoding {
             public byte[] obtainSHA(String s) throws NoSuchAlgorithmException {
                 MessageDigest msgDgst = MessageDigest.getInstance("SHA-512");
@@ -104,6 +109,18 @@
             locationParam = (TextView) v.findViewById(R.id.locationParam);
             streakLayout = (LinearLayout) v.findViewById(R.id.streakContainer);
             locationContainer = (LinearLayout) v.findViewById(R.id.locationContainer);
+            List<PointF> targetLocation = new ArrayList<>();
+            targetLocation.add(new PointF(19.994751114362767f, 73.79993096087553f));
+            targetLocation.add(new PointF(19.99472968978957f, 73.80010463397518f));
+            targetLocation.add(new PointF(19.994623197106204f, 73.80007781183151f));
+            targetLocation.add(new PointF(19.994680539310774f, 73.79991084434485f));
+            targetLocation.add(new PointF(19.994751114362767f, 73.79993096087553f));
+//            targetLocation.add(new PointF(19.994810980375338f, 73.79979634316906f));
+//            targetLocation.add(new PointF(19.994790650223145f, 73.79990679123829f));
+//            targetLocation.add(new PointF(19.994641919286902f, 73.79986238423996f));
+//            targetLocation.add(new PointF(19.994661179409604f, 73.79976901585691f));
+//            targetLocation.add(new PointF(19.994804560332348f, 73.79979178861088f));
+            locationAlgorithm = new LocationAlgorithm(targetLocation);
             Toolbar toolbar = (Toolbar) requireActivity().findViewById(R.id.toolbar);
             toolbar.setTitle("Home");
             updateTimeAndDate();
@@ -162,6 +179,7 @@
                 public void onLocationChanged(Location location) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
+                    PointF coordinates = new PointF((float)latitude,(float)longitude);
 
                     Geocoder geocoder = new Geocoder(requireActivity().getApplicationContext(), Locale.getDefault());
                     try {
@@ -171,6 +189,9 @@
                             String addressName = address.getFeatureName();
                             Log.d("Location_Fetched", addressName);
                             locationParam.setText(addressName);
+                            boolean iteration = true;
+//                            locationAlgorithm.finalOutput(requireActivity().getApplicationContext(), coordinates);
+                            changeQRCodeButtonState(locationAlgorithm.abc(coordinates));
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -288,12 +309,12 @@
                     String urlData = intentResult.getContents();
                     String studentInstituteSecreteCodeEncoded;
                     SHAEncoding sha = new SHAEncoding();
-                    try {
+                    try { //TODO: Convert str to encrypted-str >>>
                         studentInstituteSecreteCodeEncoded = sha.toHexStr(sha.obtainSHA(studentInstituteSecreteCode));
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
                     }
-                    System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded); // TODO: Testing
+                    System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded); // TODO: REMOVE AFTER Testing
                     if (urlData.equals(studentInstituteSecreteCodeEncoded)){
                         // perform attendance marking process here --->
                         Fragment mFragment = new AttendanceFragment();
@@ -318,13 +339,13 @@
                 scanQr.setEnabled(false);
                 scanQr.setAlpha(0.3f);
                 isEnableQRButton = false;
-                Toast.makeText(requireActivity().getApplicationContext(), "Enable location to Mark Attendance", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(requireActivity().getApplicationContext(), "Enable location to Mark Attendance", Toast.LENGTH_SHORT).show();
             }else{
 //                scanQr.setImageResource(R.drawable.home_mark_attendance_button);
                 scanQr.setEnabled(true);
                 scanQr.setAlpha(1.0f);
                 isEnableQRButton = true;
-                Toast.makeText(requireActivity().getApplicationContext(), "Location Enabled", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(requireActivity().getApplicationContext(), "Location Enabled", Toast.LENGTH_SHORT).show();
             }
         }
 
