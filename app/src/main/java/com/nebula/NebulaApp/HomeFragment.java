@@ -110,16 +110,14 @@
             streakLayout = (LinearLayout) v.findViewById(R.id.streakContainer);
             locationContainer = (LinearLayout) v.findViewById(R.id.locationContainer);
             List<PointF> targetLocation = new ArrayList<>();
-            targetLocation.add(new PointF(19.994751114362767f, 73.79993096087553f));
-            targetLocation.add(new PointF(19.99472968978957f, 73.80010463397518f));
-            targetLocation.add(new PointF(19.994623197106204f, 73.80007781183151f));
-            targetLocation.add(new PointF(19.994680539310774f, 73.79991084434485f));
-            targetLocation.add(new PointF(19.994751114362767f, 73.79993096087553f));
-//            targetLocation.add(new PointF(19.994810980375338f, 73.79979634316906f));
-//            targetLocation.add(new PointF(19.994790650223145f, 73.79990679123829f));
-//            targetLocation.add(new PointF(19.994641919286902f, 73.79986238423996f));
-//            targetLocation.add(new PointF(19.994661179409604f, 73.79976901585691f));
-//            targetLocation.add(new PointF(19.994804560332348f, 73.79979178861088f));
+            targetLocation.add(new PointF(19.957222156243933f, 73.77811728369765f));
+            targetLocation.add(new PointF(19.957528082061817f, 73.77860483776155f));
+            targetLocation.add(new PointF(19.95746542208065f, 73.77880613361674f));
+            targetLocation.add(new PointF(19.95691254384423f, 73.77869110590693f));
+            targetLocation.add(new PointF(19.95702511223012f, 73.77817730626943f));
+            targetLocation.add(new PointF(19.957061156293843f, 73.77811923808011f));
+            targetLocation.add(new PointF(19.957162079798966f, 73.77810280356336f));
+            targetLocation.add(new PointF(19.95721460125589f, 73.77813348104402f));
             locationAlgorithm = new LocationAlgorithm(targetLocation);
             Toolbar toolbar = (Toolbar) requireActivity().findViewById(R.id.toolbar);
             toolbar.setTitle("Home");
@@ -243,6 +241,8 @@
                             // Got last known location
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
+                            PointF coordinates = new PointF((float)latitude,(float)longitude);
+                            changeQRCodeButtonState(locationAlgorithm.abc(coordinates));
                             getAddressFromLocation(latitude, longitude);
                         } else {
                             changeQRCodeButtonState(false);
@@ -256,15 +256,17 @@
             try {
                 List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 if (addresses != null && !addresses.isEmpty()) {
+                    PointF coordinates = new PointF((float)latitude,(float)longitude);
                     Address address = addresses.get(0);
                     String addressName = address.getFeatureName();
                     if(addressName!=null) {
                         Log.d("Location_Fetched", addressName);
                         locationParam.setText(addressName);
+                        changeQRCodeButtonState(locationAlgorithm.abc(coordinates));
                     }else{
                         Log.d("Location_Fetched", "None");
                         locationParam.setText("None");
-
+                        changeQRCodeButtonState(false);
                     }
                 } else {
                     locationParam.setText("Address not found");
