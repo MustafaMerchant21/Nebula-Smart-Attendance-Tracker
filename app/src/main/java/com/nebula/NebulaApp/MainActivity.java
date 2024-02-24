@@ -34,6 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -90,8 +92,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        String timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        AttendaneOperations attendaneOperations = new AttendaneOperations("harshalkanaskar2005@gmail_com","GGSP0369");
+        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
+        lastNodeKeyNameRetriever.getLastNodeKeyNames();
+        attendaneOperations.checkNewDay();
+        attendaneOperations.markAttendance(true);
+//        Log.d("======= MainActivity: =======",attendaneOperations.getINSTITUTE()+" > "+ attendaneOperations.getInstituteID()
+//                +" > "+attendaneOperations.getSTUDENT()+" > "+attendaneOperations.getSanitizedEmail()+" > "+attendaneOperations.getATTENDANCE_DATA()
+//                +" > "+attendaneOperations.getYear()+" > "+attendaneOperations.getMonth()+" > "+attendaneOperations.getDate()+" > "+attendaneOperations.getIsMarked()+" > "+attendaneOperations.getTime());
+        Log.d("======= MainActivity: =======",String.valueOf(attendaneOperations.getAllAttendedPer()));
+
         // TODO: DB Dynamic Attendance Data Firebase >>>
-            getFragment(new HomeFragment(), true);
     }
     //TODO: Geofencing continuation --> https://leehari007.medium.com/how-to-create-a-geofence-app-in-android-ae456f16c0d0
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
