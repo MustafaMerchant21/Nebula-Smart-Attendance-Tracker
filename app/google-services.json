@@ -1,71 +1,50 @@
 {
   "project_info": {
-    "project_number": "1030981510432",
-    "firebase_url": "https://nebula-smart-attendance-track-default-rtdb.firebaseio.com",
-    "project_id": "nebula-smart-attendance-track",
-    "storage_bucket": "nebula-smart-attendance-track.appspot.com"
+    "project_number": "364592541366",
+    "firebase_url": "https://nebula-app-d7c35-default-rtdb.firebaseio.com",
+    "project_id": "nebula-app-d7c35",
+    "storage_bucket": "nebula-app-d7c35.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030981510432:android:72eb61bd23ad4ec1d8e345",
-        "android_client_info": {
-          "package_name": "com.example.nebula_smart_attendance_tracking"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1030981510432-39c28e7g9l2j6atsdla7fhsspnn416vd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.nebula_smart_attendance_tracking",
-            "certificate_hash": "7134a7c4714b9f3860b62196dc4fc35578a6ed37"
-          }
-        },
-        {
-          "client_id": "1030981510432-d46qmgd2q5sdkmh9f1si05bdjmbiu7nj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBZMtFtWaaNiqcu3982dTgNbUCqWf_Lw_A"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1030981510432-d46qmgd2q5sdkmh9f1si05bdjmbiu7nj.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1030981510432:android:2f3872633c60bfe1d8e345",
+        "mobilesdk_app_id": "1:364592541366:android:83d6d1d611c1544b0e8017",
         "android_client_info": {
           "package_name": "com.nebula.NebulaApp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030981510432-d46qmgd2q5sdkmh9f1si05bdjmbiu7nj.apps.googleusercontent.com",
+          "client_id": "364592541366-6cm6k6dv14ak9lhb1elv31kh98f4tov7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nebula.NebulaApp",
+            "certificate_hash": "7134a7c4714b9f3860b62196dc4fc35578a6ed37"
+          }
+        },
+        {
+          "client_id": "364592541366-krj0etnrfovs7r73m6kq2blqsrjuutnc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nebula.NebulaApp",
+            "certificate_hash": "875c741c379c320aa1f4f14cfb1f36d2c1468d7f"
+          }
+        },
+        {
+          "client_id": "364592541366-qgog8o6b05l1i49use4m7eonjh743v32.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZMtFtWaaNiqcu3982dTgNbUCqWf_Lw_A"
+          "current_key": "AIzaSyBzR18ec48akjZMqf-4z8xgEVl-hlepFos"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1030981510432-d46qmgd2q5sdkmh9f1si05bdjmbiu7nj.apps.googleusercontent.com",
+              "client_id": "364592541366-qgog8o6b05l1i49use4m7eonjh743v32.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

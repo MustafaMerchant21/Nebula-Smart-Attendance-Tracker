@@ -10,4 +10,64 @@
     <string name="apply_for_a_leave">Apply for a leave</string>
     <string name="monitor_your_progress">Monitor Your Progress</string>
     <string name="this_month">This Month: </string>
+
+    <string name="insitute_id">Insitute id</string>
+    <string name="welcome">Welcome</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="remember_me">Remember me</string>
+    <string name="create_password">Create Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login_button">login button</string>
+    <string name="already_have_an_account">Already have an account.</string>
+    <string name="log_in">Sign In</string>
+    <string name="Sign_up">Register</string>
+    <string name="tell_us">Tell us</string>
+    <string name="about_yourself">About Yourself</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="mobile">Mobile</string>
+    <string name="gender">Gender</string>
+    <string name="abc_123xyz_dot_domain_net">abc@123xyz@dot.domain.net</string>
+    <string name="course">Course</string>
+    <string name="year_of_study">Year Of Study</string>
+    <string name="semester">Semester</string>
+    <string name="college_id">College ID</string>
+    <string name="college_name">College Name</string>
+    <string name="mark_attendance">Mark Attendance</string>
+    <string-array name="gender_options">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="course_option">
+        <item>Select Course</item>
+        <item>CO</item>
+        <item>ME</item>
+        <item>CE</item>
+        <item>EJ</item>
+        <item>MK</item>
+    </string-array>
+    <string-array name="year_of_study">
+        <item>Select Year</item>
+        <item>FY</item>
+        <item>SY</item>
+        <item>TY</item>
+    </string-array>
+    <string-array name="semester">
+        <item>Select Semester</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+
+    </string-array>
 </resources>

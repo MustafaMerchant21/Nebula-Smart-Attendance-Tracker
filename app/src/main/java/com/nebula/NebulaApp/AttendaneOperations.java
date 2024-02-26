@@ -10,12 +10,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class AttendaneOperations {
     private final String STUDENT = "Student";
@@ -23,8 +27,8 @@ public class AttendaneOperations {
     private final String ATTENDANCE_DATA = "Attendance Data";
     private final String IS_MARKED = "isMarked";
     private final String TIME = "time";
-    private String sanitizedEmail;
-    private String instituteID;
+    public String sanitizedEmail;
+    public String instituteID;
 
     // getAllAttendedPer
     public static double  ALLATTENDEDPERCENTAGE;
@@ -35,23 +39,28 @@ public class AttendaneOperations {
     // leaveDays
     public int leave_days;
 
+    MaterialCalendarView materialCalendarView;
+    HomeFragment homeFragment = new HomeFragment();
+
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference attendRef = database.getReference().child("Nebula");
+    DatabaseReference attendRef = database.getReference();
 
     public AttendaneOperations() {
     }
 
-    //TODO User details shall (should) be fetched from Shares-Preferences <>
+    //TODO User details shall (should) be fetching from Shares-Preferences <>
     public AttendaneOperations(String sanitizedEmail, String instituteID) {
         this.sanitizedEmail = sanitizedEmail;
         this.instituteID = instituteID;
     }
-    public DatabaseReference getDbRef(){
-        return attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
-                .child(ATTENDANCE_DATA);
+    public AttendaneOperations(MaterialCalendarView materialCalendarView) {
+        this.materialCalendarView = materialCalendarView;
     }
-
+    public DatabaseReference getDbRef(){
+        return attendRef.child(this.INSTITUTE).child(this.getInstituteID()).child(this.STUDENT).child(this.getSanitizedEmail())
+                .child(this.ATTENDANCE_DATA);
+    }
 
 //    public class LastNodeKeyNameRetriever{
 //        String  lastYear, lastMonth, lastDay;
@@ -161,6 +170,7 @@ public class AttendaneOperations {
 //            });
 //        }
 //    }
+
     //   Todo LastNodeKeyNameRetriever inner class (above) 👆
 
     public String getSTUDENT() {
@@ -202,7 +212,6 @@ public class AttendaneOperations {
     }
 //    }
     public double getAllAttendedPer(){
-
         attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
             .child(ATTENDANCE_DATA)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -242,17 +251,39 @@ public class AttendaneOperations {
 
     // Helper Method to create a new day node inside a month node >>>
     public void createDayNode(int year, int month, int day) {
-        String[] allMonths = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        String[] allMonths = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
         // Create a reference to the year node  >>>
         DatabaseReference yearRef = attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
             .child(ATTENDANCE_DATA).child(String.valueOf(year));
         // Create a reference to the month node  >>>
         DatabaseReference monthRef = yearRef.child(allMonths[month-1]);
-        String formattedDay = day + "|" + month + "|" + year;
-        // Create a reference to the day node  >>>
-        DatabaseReference dayRef = monthRef.child(formattedDay);
-        // Set some value for the day node >>>
-        dayRef.setValue("Some value");
+        String fMon;
+        if (month < 10) {
+            fMon = "0"+month;
+//            month = Integer.parseInt(fMon);
+            String formattedDay = day + "|" + fMon + "|" + year;
+            // Create a reference to the day node  >>>
+            DatabaseReference dayRef = monthRef.child(formattedDay);
+            Map<String,Object> dayChildren = new HashMap<String,Object>();
+            dayChildren.put("isMarked", Boolean.FALSE);
+            dayChildren.put("time","00:00:00");
+            dayRef.setValue(dayChildren);
+            Log.d("########", String.valueOf(month));
+            Log.d("AttendanceOp:NewDay", "New Day Created: createNewDay()");
+        }else{
+            String formattedDay = day + "|" + month + "|" + year;
+            // Create a reference to the day node  >>>
+            DatabaseReference dayRef = monthRef.child(formattedDay);
+            Map<String,Object> dayChildren = new HashMap<String,Object>();
+            dayChildren.put("isMarked", Boolean.FALSE);
+            dayChildren.put("time","00:00:00");
+            dayRef.setValue(dayChildren);
+            Log.d("AttendanceOp:NewDay", "New Day Created: createNewDay()");
+            Log.d("########", String.valueOf(month));
+
+        }
+//        // Set some value for the day node >>>
+//        dayRef.setValue("Some value");
     }
     // Helper Method to create a new month node inside a year node >>>
     public void createMonthNode(int year, String month) {
@@ -271,45 +302,46 @@ public class AttendaneOperations {
     }
 
     // Method to check if a new day has arrived and create a new day node in DB>>>
-    public void checkNewDay() {
-        // Get the current date >>>
-        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(getDbRef());
-        lastNodeKeyNameRetriever.getLastNodeKeyNames();
+    public void checkNewDay(String last_year, String last_month, String last_day) {
 
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
+//        if (currentMonth < 10) {
+//            String fMon = "0"+currentMonth;
+//            currentMonth = Integer.parseInt(fMon);
+//        }
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        ArrayList<String> allMonths = new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"));
-
-        String lastYearString = lastNodeKeyNameRetriever.getLastMonth();
-        if (lastYearString != null) {
-            int lastYear = Integer.parseInt(lastYearString);
-        } else {
-            Log.e("AttendaneOperations", String.valueOf(allMonths.indexOf(lastNodeKeyNameRetriever.getLastMonth()) + 1));
-        }
+        ArrayList<String> allMonths = new ArrayList<String>(Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
 
         // Get the last stored date from the DB >>>
-        int lastYear = Integer.parseInt(lastNodeKeyNameRetriever.getLastYear());
-        int lastMonth = allMonths.indexOf(lastNodeKeyNameRetriever.getLastMonth()) + 1;
-        int lastDay = Integer.parseInt(lastNodeKeyNameRetriever.getLastDay());
+        int lastYear = Integer.parseInt(last_year);
+        int lastMonth = allMonths.indexOf(last_month) + 1;
+        String[] lastDayComponents = last_day.split("\\|");
+        int lastDay = Integer.parseInt(lastDayComponents[0]);
+        Log.d("AttendanceOperation:currentMonth", String.valueOf(currentMonth));
+        Log.d("AttendanceOperation:lastMonth", String.valueOf(lastMonth));
 
         // Compare the current date and the last stored date (From DB)>>>
         if (currentYear > lastYear) {
             createYearNode(currentYear);
             createMonthNode(currentYear, allMonths.get(currentMonth - 1));
             createDayNode(currentYear, currentMonth, currentDay);
+            Log.d("AttendanceOperations","New Year Created");
         } else if (currentMonth > lastMonth) {
             createMonthNode(currentYear, allMonths.get(currentMonth - 1));
             createDayNode(currentYear, currentMonth, currentDay);
+            Log.d("AttendanceOperations","New Month Created");
         } else if (currentDay > lastDay) {
-            createDayNode(currentYear, currentMonth, currentDay);
+            createDayNode(currentYear, (currentMonth), currentDay);
+            Log.d("AttendanceOperations","New Day Created");
         }
     }
 
     // Calculate total days of sem and return >>>
     public int getTotalDays(){
-        checkNewDay();
+        LastNodeKeyNameRetriever lnknr = new LastNodeKeyNameRetriever(getDbRef());
+        checkNewDay(lnknr.getLastYear(), lnknr.getLastMonth(), lnknr.getLastDay());
         attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
             .child(ATTENDANCE_DATA).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -342,7 +374,8 @@ public class AttendaneOperations {
 
     // Calculate days left of sem and return >>>
     public int getLeftDays(){
-        checkNewDay();
+        LastNodeKeyNameRetriever lnknr = new LastNodeKeyNameRetriever(getDbRef());
+        checkNewDay(lnknr.getLastYear(), lnknr.getLastMonth(), lnknr.getLastDay());
         int total_assigned_days = 0; //TODO get total days of the sem from the management DB data
         attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
             .child(ATTENDANCE_DATA).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -375,7 +408,7 @@ public class AttendaneOperations {
 
     // Calculate the days that student didn't attend >>>
     public int getLeaveDays(){
-        DatabaseReference leavesRef = database.getReference().child("Nebula").child(INSTITUTE)
+        DatabaseReference leavesRef = database.getReference().child(INSTITUTE)
                 .child(instituteID).child(STUDENT).child(sanitizedEmail).child("Leave Data"); //TODO Check DB for Exact name of "Leave Data" <<<
         leavesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -417,6 +450,12 @@ public class AttendaneOperations {
         mark.child("isMarked").setValue(isMarked);
         String timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
         mark.child("time").setValue(timeStamp);
+//        ArrayList<String> allMonths = new ArrayList<String>(Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
+//        String[] lastDayComponents = getDate().split("\\|");
+//        int day = Integer.parseInt(lastDayComponents[0]);
+//        CalendarDay c = CalendarDay.from(Integer.parseInt(getYear()),allMonths.indexOf(getMonth()) + 1,day);
+//        AttendanceFragment attendanceFragment = new AttendanceFragment();
+//        attendanceFragment.addDecoratorToCalendar(c);
     }
 
     // Calculate the increase or decrease of the percentage of the current month >>>

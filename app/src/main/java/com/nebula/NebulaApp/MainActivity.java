@@ -1,13 +1,13 @@
 package com.nebula.NebulaApp;
 
-import android.Manifest;
+import static android.content.ContentValues.TAG;
+import static com.nebula.NebulaApp.Nebula_personal_information.SHARED_PREFS;
+
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
@@ -19,24 +19,25 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        String timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        AttendaneOperations attendaneOperations = new AttendaneOperations("harshalkanaskar2005@gmail_com","GGSP0369");
+        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
+        lastNodeKeyNameRetriever.getLastNodeKeyNames(new LastNodeKeyNamesCallback() {
+            @Override
+            public void onLastNodeKeyNamesRetrieved(String lastYear, String lastMonth, String lastDay) {
+                Log.d("=== Last year === ", lastYear);
+                Log.d("=== Last month === ", lastMonth);
+                Log.d("=== Last day === ", lastDay);
+                Log.d("MainActivity","New Day Checked");
+            attendaneOperations.checkNewDay(lastYear,lastMonth,lastDay);
+            }
+        });
+//        attendaneOperations.markAttendance(false);
+//        Log.e("MainActivity","Attendance Marked!");
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
         bottomNavigationView.setItemIconTintList(null);
@@ -92,18 +109,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        String timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
-        AttendaneOperations attendaneOperations = new AttendaneOperations("harshalkanaskar2005@gmail_com","GGSP0369");
-        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
-        lastNodeKeyNameRetriever.getLastNodeKeyNames();
-        attendaneOperations.checkNewDay();
-        attendaneOperations.markAttendance(true);
-//        Log.d("======= MainActivity: =======",attendaneOperations.getINSTITUTE()+" > "+ attendaneOperations.getInstituteID()
-//                +" > "+attendaneOperations.getSTUDENT()+" > "+attendaneOperations.getSanitizedEmail()+" > "+attendaneOperations.getATTENDANCE_DATA()
-//                +" > "+attendaneOperations.getYear()+" > "+attendaneOperations.getMonth()+" > "+attendaneOperations.getDate()+" > "+attendaneOperations.getIsMarked()+" > "+attendaneOperations.getTime());
-        Log.d("======= MainActivity: =======",String.valueOf(attendaneOperations.getAllAttendedPer()));
-
-        // TODO: DB Dynamic Attendance Data Firebase >>>
+        getFragment(new HomeFragment(), true);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        HomeFragment homeFragment1 = new HomeFragment();
+//        Intent passedFromLogin = getIntent();
+//        Bundle b = new Bundle();
+//        b.putString("source_activity",passedFromLogin.getStringExtra("source_activity"));
+//        homeFragment1.setArguments(b);
+//        fragmentTransaction.add(R.id.frameLayout, homeFragment1);
     }
     //TODO: Geofencing continuation --> https://leehari007.medium.com/how-to-create-a-geofence-app-in-android-ae456f16c0d0
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
@@ -125,11 +139,52 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFragment(Fragment fragment, boolean isInitialized){
         FragmentManager fragmentManager = getSupportFragmentManager();
+        SharedPreferences sharedPref = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+
+        Intent passedFromLogin = getIntent();
         Bundle args = new Bundle();
+        args.putString("source_activity",passedFromLogin.getStringExtra("source_activity"));
+        fragment.setArguments(args);
 //        boolean isMarked = true;  // TODO: Retrieve from Database the value of isMarked
 //        args.putString("isMarked", isMarked);
-        args.putString("isMarked", "False"); // TESTING PURPOSE
-        fragment.setArguments(args);
+//        AttendaneOperations attendaneOperations = new AttendaneOperations(sharedPref.getString("sanitized_email",""),sharedPref.getString("Institute_id",""));
+//        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
+//        lastNodeKeyNameRetriever.getLastNodeKeyNames(new LastNodeKeyNamesCallback() {
+//            @Override
+//            public void onLastNodeKeyNamesRetrieved(String lastYear, String lastMonth, String lastDay) {
+//                Log.d("MainActivity: getFragment","New Day Checked");
+//                attendaneOperations.checkNewDay(lastYear,lastMonth,lastDay);
+//                reference.child("Institute").child(sharedPref.getString("Institute_id",""))
+//                        .child("Student").child(sharedPref.getString("sanitized_email",""))
+//                        .child(lastYear).child(lastMonth).child(lastDay).child("isMarked")
+//                        .addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                // Check if the dataSnapshot exists
+//                                if (dataSnapshot.exists()) {
+//                                    // Retrieve the value of isMarked field
+//                                    Boolean isMarkedValue = dataSnapshot.getValue(Boolean.class);
+//                                    if (isMarkedValue != null) {
+//                                        // Do something with the retrieved value
+//                                        args.putString("isMarked", "True"); // TESTING PURPOSE
+//                                        Log.d("MainActivity: getFragment", "isMarked value: " + isMarkedValue);
+//                                    } else {
+//                                        args.putString("isMarked", "False"); // TESTING PURPOSE
+//                                        Log.d("MainActivity: getFragment", "isMarked value is null");
+//                                    }
+//                                } else {
+//                                        args.putString("isMarked", "False"); // TESTING PURPOSE
+//                                    Log.d("MainActivity: getFragment", "isMarked field does not exist");
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//                                // Handle errors
+//                                Log.e(TAG, "Error fetching isMarked value: " + databaseError.getMessage());
+//                            }
+//                        });}
+//        });
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(isInitialized){
             fragmentTransaction.add(R.id.frameLayout, new HomeFragment());

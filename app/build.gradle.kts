@@ -45,6 +45,13 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.gms:play-services-location:21.1.0")
 
+    implementation ("com.google.firebase:firebase-auth:22.3.1")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.firebaseui:firebase-ui-auth:8.0.0")
+    implementation ("com.googlecode.libphonenumber:libphonenumber:8.12.29")
+    implementation ("androidx.biometric:biometric:1.1.0")
+
     implementation ("androidx.core:core:1.6.0")
     implementation ("com.github.prolificinteractive.geocoder:geocoder:0.1.0")
     implementation ("com.github.prolificinteractive.geocoder:geocoder-googlemaps:0.1.0")

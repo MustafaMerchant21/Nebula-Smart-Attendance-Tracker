@@ -52,5 +52,15 @@
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">#E6E0E9</item>
     </style>
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Customize dialog background color -->
+        <item name="android:background">#24366C</item>
+        <!-- Customize title text color -->
+        <item name="android:textColorPrimary">#AA96DF</item>
+        <!-- Customize message text color -->
+        <item name="android:textColorSecondary">@color/white</item>
+        <!-- Customize button text color -->
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
 
 </resources>

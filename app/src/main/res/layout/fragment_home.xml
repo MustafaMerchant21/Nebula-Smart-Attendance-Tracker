@@ -32,6 +32,7 @@
             android:text="@string/home_welcome_default"
             android:textAppearance="@style/home_welcome_text_default" />
         <TextView
+            android:id="@+id/userFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha=".9"
