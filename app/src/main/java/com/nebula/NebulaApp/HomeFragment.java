@@ -647,7 +647,7 @@
                     System.out.println("\n" + studentInstituteSecreteCode + " : " + studentInstituteSecreteCodeEncoded); // TODO: REMOVE AFTER Testing
                     if (urlData.equals(studentInstituteSecreteCodeEncoded)){
                         // perform attendance marking process here --->
-                        Fragment mFragment = new AttendanceFragment();
+                        AttendanceFragment mFragment = new AttendanceFragment();
                         Bundle args = new Bundle();
                         args.putString("isMarked", "True");
                         mFragment.setArguments(args);
