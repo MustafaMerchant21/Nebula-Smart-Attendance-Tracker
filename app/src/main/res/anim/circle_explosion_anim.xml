@@ -7,5 +7,7 @@
         android:fromYScale="0"
         android:toXScale="40"
         android:toYScale="40"/>
-
+<!--    <alpha-->
+<!--        android:fromAlpha="1"-->
+<!--        android:toAlpha="0"/>-->
 </set>

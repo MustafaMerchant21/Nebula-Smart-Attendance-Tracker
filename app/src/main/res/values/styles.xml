@@ -54,13 +54,13 @@
     </style>
     <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Customize dialog background color -->
-        <item name="android:background">#24366C</item>
+        <item name="android:background">#1C2A4F</item>
         <!-- Customize title text color -->
-        <item name="android:textColorPrimary">#AA96DF</item>
+        <item name="android:textColorPrimary">#EB3B81FD</item>
         <!-- Customize message text color -->
-        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorSecondary">#EBFFFFFF</item>
         <!-- Customize button text color -->
-        <item name="colorAccent">#FFFFFF</item>
+        <item name="colorAccent">#D0FFFFFF</item>
     </style>
 
     <style name="leave_card_header">
@@ -86,6 +86,42 @@
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="new_leave_header">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="new_leave_txt">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#CCFFFFFF</item>
+    </style>
+    <style name="attendance_percentage_text">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#8381FF</item>
+    </style>
+    <style name="dialog_leave_delete_warning">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="dialog_leave_delete_warning_txt">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="Theme.DoNotDim" parent="android:Theme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="profile_fields_key">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#C4FFFFFF</item>
+    </style>
+    <style name="ImageView.Circle" parent="">
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>

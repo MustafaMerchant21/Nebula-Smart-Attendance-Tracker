@@ -9,10 +9,42 @@
     android:background="@drawable/app_background"
     android:padding="15dp">
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:clipChildren="false"
+                android:clipToOutline="false"
+                android:clipToPadding="false"
+                android:layout_height="300dp">
+                <ImageView
+                    android:layout_width="370dp"
+                    android:layout_height="370dp"
+                    android:clipToOutline="false"
+                    android:src="@drawable/attendance_blur_background2"
+                    android:layout_gravity="center"/>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:id="@+id/pieChart_view"/>
+                <TextView
+                    android:id="@+id/attendancePercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100%"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/attendance_percentage_text"/>
+
+            </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,18 +63,19 @@
                 android:text="@string/monitor_your_progress"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/this_month"
-                android:layout_weight="1"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/textRegular"
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/monthPercentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="-60dp"
@@ -64,6 +97,17 @@
             app:mcv_headerTextAppearance="@style/calendar_month_text"
             app:mcv_weekDayTextAppearance="@style/calendar_week_day_text"/>
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/shareProgressBtn"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="60dp"
+                android:scaleType="centerCrop"
+                android:backgroundTint="@color/fui_transparent"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/share_progress_button"/>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </ScrollView>

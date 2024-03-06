@@ -1,7 +1,7 @@
 package com.nebula.NebulaApp;
 
+import static com.nebula.NebulaApp.HomeFragment.SHARED_PREFS;
 import static android.content.ContentValues.TAG;
-import static com.nebula.NebulaApp.Nebula_personal_information.SHARED_PREFS;
 
 import android.app.Activity;
 import android.content.Context;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LocationManager locationManager;
     private LocationListener locationListener;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        sharedPref = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         setSupportActionBar(toolbar);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         String timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
-        AttendaneOperations attendaneOperations = new AttendaneOperations("harshalkanaskar2005@gmail_com","GGSP0369");
+        AttendaneOperations attendaneOperations = new AttendaneOperations(sharedPref.getString("sanitized_email",""),sharedPref.getString("Institute_id",""),sharedPref);
         LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
         lastNodeKeyNameRetriever.getLastNodeKeyNames(new LastNodeKeyNamesCallback() {
             @Override
@@ -86,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
             attendaneOperations.checkNewDay(lastYear,lastMonth,lastDay);
             }
         });
-//        attendaneOperations.markAttendance(false);
-//        Log.e("MainActivity","Attendance Marked!");
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
@@ -145,46 +145,6 @@ public class MainActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         args.putString("source_activity",passedFromLogin.getStringExtra("source_activity"));
         fragment.setArguments(args);
-//        boolean isMarked = true;  // TODO: Retrieve from Database the value of isMarked
-//        args.putString("isMarked", isMarked);
-//        AttendaneOperations attendaneOperations = new AttendaneOperations(sharedPref.getString("sanitized_email",""),sharedPref.getString("Institute_id",""));
-//        LastNodeKeyNameRetriever lastNodeKeyNameRetriever = new LastNodeKeyNameRetriever(attendaneOperations.getDbRef());
-//        lastNodeKeyNameRetriever.getLastNodeKeyNames(new LastNodeKeyNamesCallback() {
-//            @Override
-//            public void onLastNodeKeyNamesRetrieved(String lastYear, String lastMonth, String lastDay) {
-//                Log.d("MainActivity: getFragment","New Day Checked");
-//                attendaneOperations.checkNewDay(lastYear,lastMonth,lastDay);
-//                reference.child("Institute").child(sharedPref.getString("Institute_id",""))
-//                        .child("Student").child(sharedPref.getString("sanitized_email",""))
-//                        .child(lastYear).child(lastMonth).child(lastDay).child("isMarked")
-//                        .addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                // Check if the dataSnapshot exists
-//                                if (dataSnapshot.exists()) {
-//                                    // Retrieve the value of isMarked field
-//                                    Boolean isMarkedValue = dataSnapshot.getValue(Boolean.class);
-//                                    if (isMarkedValue != null) {
-//                                        // Do something with the retrieved value
-//                                        args.putString("isMarked", "True"); // TESTING PURPOSE
-//                                        Log.d("MainActivity: getFragment", "isMarked value: " + isMarkedValue);
-//                                    } else {
-//                                        args.putString("isMarked", "False"); // TESTING PURPOSE
-//                                        Log.d("MainActivity: getFragment", "isMarked value is null");
-//                                    }
-//                                } else {
-//                                        args.putString("isMarked", "False"); // TESTING PURPOSE
-//                                    Log.d("MainActivity: getFragment", "isMarked field does not exist");
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                // Handle errors
-//                                Log.e(TAG, "Error fetching isMarked value: " + databaseError.getMessage());
-//                            }
-//                        });}
-//        });
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(isInitialized){
             fragmentTransaction.add(R.id.frameLayout, new HomeFragment());

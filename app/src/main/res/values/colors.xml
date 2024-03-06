@@ -16,6 +16,7 @@
     <color name="homeLeftTxt">#6D5291</color>
     <color name="uiContainerBox">#12FFFFFF</color> <!-- calendar, container -->
     <color name="attendanceChangeRate">#51FC62</color> <!-- +21% / -15% -->
+    <color name="fab_animation">#4E10FF</color>
 
 
 </resources>

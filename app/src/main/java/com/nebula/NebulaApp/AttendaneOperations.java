@@ -1,6 +1,10 @@
 package com.nebula.NebulaApp;
 
 
+import static com.nebula.NebulaApp.HomeFragment.SHARED_PREFS;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +48,7 @@ public class AttendaneOperations {
     HomeFragment homeFragment = new HomeFragment();
 
 
+    SharedPreferences sharedPref;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference attendRef = database.getReference();
 
@@ -50,9 +56,10 @@ public class AttendaneOperations {
     }
 
     //TODO User details shall (should) be fetching from Shares-Preferences <>
-    public AttendaneOperations(String sanitizedEmail, String instituteID) {
+    public AttendaneOperations(String sanitizedEmail, String instituteID, SharedPreferences sharedPreferences) {
         this.sanitizedEmail = sanitizedEmail;
         this.instituteID = instituteID;
+        this.sharedPref = sharedPreferences;
     }
     public AttendaneOperations(MaterialCalendarView materialCalendarView) {
         this.materialCalendarView = materialCalendarView;
@@ -211,7 +218,12 @@ public class AttendaneOperations {
         this.instituteID = instituteID;
     }
 //    }
-    public double getAllAttendedPer(){
+    public void getAllAttendedPer(AttendanceCallback callback){
+        Log.e("AttendanceOpr","INSTITUTE:"+INSTITUTE);
+        Log.e("AttendanceOpr","INSTITUTE_ID:"+instituteID);
+        Log.e("AttendanceOpr","STUDENT:"+STUDENT);
+        Log.e("AttendanceOpr","SanitizedEmail:"+sanitizedEmail);
+        Log.e("AttendanceOpr","ATTENDANCE_DATA:"+ATTENDANCE_DATA);
         attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
             .child(ATTENDANCE_DATA)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -234,9 +246,11 @@ public class AttendaneOperations {
 
                         if (totalDaysSince > 0) {
                             ALLATTENDEDPERCENTAGE = (double) markedDays / totalDaysSince * 100;
+                            callback.onAttendancePercentage(ALLATTENDEDPERCENTAGE);
                             Log.d("AttendanceOperations", "All Attendance Perc:"+ALLATTENDEDPERCENTAGE);
                         } else {
                             ALLATTENDEDPERCENTAGE = 0.0;
+                            callback.onAttendancePercentage(ALLATTENDEDPERCENTAGE);
                             Log.e("AttendanceOperations", "No attendance data found. Result: "+ALLATTENDEDPERCENTAGE);
                         }
                     }
@@ -246,7 +260,6 @@ public class AttendaneOperations {
                         Log.e("AttendanceOperations: getAllAttendancePer", "Operation canceled: "+error);
                     }
                 });
-        return ALLATTENDEDPERCENTAGE;
     }
 
     // Helper Method to create a new day node inside a month node >>>
@@ -258,10 +271,12 @@ public class AttendaneOperations {
         // Create a reference to the month node  >>>
         DatabaseReference monthRef = yearRef.child(allMonths[month-1]);
         String fMon;
-        if (month < 10) {
+        String fDay;
+        if ((month < 10) || (day<10)) {
             fMon = "0"+month;
+            fDay = "0"+day;
 //            month = Integer.parseInt(fMon);
-            String formattedDay = day + "|" + fMon + "|" + year;
+            String formattedDay = fDay + "|" + fMon + "|" + year;
             // Create a reference to the day node  >>>
             DatabaseReference dayRef = monthRef.child(formattedDay);
             Map<String,Object> dayChildren = new HashMap<String,Object>();
@@ -409,7 +424,7 @@ public class AttendaneOperations {
     // Calculate the days that student didn't attend >>>
     public int getLeaveDays(){
         DatabaseReference leavesRef = database.getReference().child(INSTITUTE)
-                .child(instituteID).child(STUDENT).child(sanitizedEmail).child("Leave Data"); //TODO Check DB for Exact name of "Leave Data" <<<
+                .child(instituteID).child(STUDENT).child(sanitizedEmail).child("Attendance Data");
         leavesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -459,14 +474,41 @@ public class AttendaneOperations {
     }
 
     // Calculate the increase or decrease of the percentage of the current month >>>
-    public double getThisMonthStats(){
-        double percentage = 0.0;
-        // TODO  INSTITUTE > instituteId > STUDENT > studentID > ATTENDANCE_DATA > year > month > date > {
-        //      (isMarked=boolean),
-        //      (time=String)
-        //  }
-        return percentage;
+    public void getThisMonthContribution(AttendanceCallback callback) {
+        attendRef.child(INSTITUTE).child(instituteID).child(STUDENT).child(sanitizedEmail)
+                .child(ATTENDANCE_DATA).child(getYear()).child(getMonth())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int markedDays = 0;
+                        int totalDaysThisMonth = 0;
+
+                        for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
+                            Boolean isMarked = dateSnapshot.child("isMarked").getValue(Boolean.class);
+                            if (isMarked != null && isMarked) {
+                                markedDays++;
+                            }
+                            totalDaysThisMonth++;
+                        }
+
+                        double attendancePercentageThisMonth = totalDaysThisMonth > 0 ? (double) markedDays / totalDaysThisMonth * 100 : 0.0;
+
+                        double contribution = attendancePercentageThisMonth - ALLATTENDEDPERCENTAGE;
+
+                        // Format the contribution to have only one number after the decimal point
+                        DecimalFormat df = new DecimalFormat("#.#");
+                        double formattedContribution = Double.parseDouble(df.format(contribution));
+
+                        callback.onContributionPercentage(formattedContribution);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("AttendanceOperations", "getThisMonthContribution: onCancelled: " + error.getMessage());
+                    }
+                });
     }
+
 }
 
 

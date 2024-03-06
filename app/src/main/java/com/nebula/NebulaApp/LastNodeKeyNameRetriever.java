@@ -31,7 +31,7 @@ public class LastNodeKeyNameRetriever {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Check if there is any data  >>>
-                if (dataSnapshot.exists()) {                                            //Todo wtf it returns false ???!!
+                if (dataSnapshot.exists()) {
                     for (DataSnapshot yearSnapshot : dataSnapshot.getChildren()) {
                         String yearKey = String.valueOf(yearSnapshot.getKey());
                         setLastYear(yearKey);
@@ -184,22 +184,22 @@ public class LastNodeKeyNameRetriever {
     // Todo: Backup getLastNodeKeyNames method 👆
 
     public String getLastYear() {
-        return this.lastYear;
+        return lastYear;
     }
     public void setLastYear(String lastYear) {
-        this.lastYear = lastYear;
+        LastNodeKeyNameRetriever.lastYear = lastYear;
     }
     public String getLastMonth() {
         return lastMonth;
     }
     public void setLastMonth(String lastMonth) {
-        this.lastMonth = lastMonth;
+        LastNodeKeyNameRetriever.lastMonth = lastMonth;
     }
     public String getLastDay() {
         return lastDay;
     }
     public void setLastDay(String lastDay) {
-        this.lastDay = lastDay;
+        LastNodeKeyNameRetriever.lastDay = lastDay;
     }
 }
 

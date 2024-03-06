@@ -1,8 +1,11 @@
 package com.nebula.NebulaApp;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +31,7 @@ import com.nebula.NebulaApp.databinding.FragmentLeaveBinding;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class LeaveFragment extends Fragment {
     private ViewPager viewPager;
@@ -36,6 +41,7 @@ public class LeaveFragment extends Fragment {
     private AppliedFragment appliedFragment;
 
     private FragmentLeaveBinding binding;
+    private CoordinatorLayout coordinatorLayout;
 
 
 
@@ -52,6 +58,7 @@ public class LeaveFragment extends Fragment {
         Toolbar toolbar = (Toolbar) requireActivity().findViewById(R.id.toolbar);
         toolbar.setTitle("Leave");
 
+        coordinatorLayout = v.findViewById(R.id.coordinatorLayout);
         viewPager = v.findViewById(R.id.viewPager);
         tabLayout = v.findViewById(R.id.tabLayout);
         reviewedFragment = new ReviewedFragment();
@@ -70,22 +77,41 @@ public class LeaveFragment extends Fragment {
 
         // FAB
         FloatingActionButton fab = v.findViewById(R.id.fab);
-        final Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.circle_explosion_anim);
-        animation.setDuration(700);
-        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        final Animation animation_in = AnimationUtils.loadAnimation(getContext(), R.anim.circle_explosion_anim);
+        animation_in.setDuration(400);
+        animation_in.setInterpolator(new AccelerateDecelerateInterpolator());
+        final Animation animation_out = AnimationUtils.loadAnimation(getContext(), R.anim.circle_fade_out);
+        animation_out.setDuration(400);
+        animation_out.setInterpolator(new AccelerateDecelerateInterpolator());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fab.setVisibility(View.GONE);
                 binding.circle.setVisibility(View.VISIBLE);
-                ViewExt.startAnimation(binding.circle, animation, new Runnable() {
+
+                ViewExt.startAnimation(binding.circle, animation_in, new Runnable() {
                     @Override
                     public void run() {
                         // display your fragment
-                        v.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.attendanceChangeRate));
-                        binding.circle.setVisibility(View.GONE);
+//                        v.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.fab_animation_in));
+//                        v.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.app_background) );
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frameLayout, new NewLeaveApplication()).addToBackStack("NewLeave");
+                        fragmentTransaction.commit();
                     }
                 });
+                binding.circle.setVisibility(View.GONE);
+//                    ViewExt.startAnimation(binding.circle2, animation_in, new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            // display your fragment
+//    //                        v.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.fab_animation_in));
+//                            v.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.app_background) );
+//                            binding.circle.setVisibility(View.GONE);
+//                            binding.circle2.setVisibility(View.GONE);
+//                        }
+//                    });
             }
         });
 

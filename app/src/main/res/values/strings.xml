@@ -41,6 +41,7 @@
     <string name="college_id">College ID</string>
     <string name="college_name">College Name</string>
     <string name="mark_attendance">Mark Attendance</string>
+    <string name="personal_information">Personal Information</string>
     <string-array name="gender_options">
         <item>Select Gender</item>
         <item>Male</item>
@@ -68,6 +69,8 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+
+
 
     </string-array>
 </resources>
