@@ -1,2 +1,2 @@
-[![MasterHead]([https://i.pinimg.com/originals/90/ca/e0/90cae0cf9b6cded6456a336101de9fd8.jpg](https://drive.google.com/file/d/1bw6YDqZGJ3QbTzWJ5Rh7k-tGJcEvNloD/view?usp=sharing)https://drive.google.com/file/d/1bw6YDqZGJ3QbTzWJ5Rh7k-tGJcEvNloD/view?usp=sharing)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
-<img href="https://drive.google.com/file/d/1bw6YDqZGJ3QbTzWJ5Rh7k-tGJcEvNloD/view?usp=sharing">
+[![MasterHead](![image](https://github.com/MustafaMerchant21/Nebula-Smart-Attendance-Tracker/assets/101447345/19969431-df76-4f94-b579-f0f8d6f2018a))](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
